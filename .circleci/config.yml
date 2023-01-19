@@ -4,10 +4,10 @@ jobs:
     # Primary container image where all steps run.
      - image: cimg/base:current
     # Secondary container image on common network.
-     - image: naveensi/simple-flask-app
+     - image: ronakpatildocker/http
 
     steps:
       # command will execute in an Ubuntu-based container
       # and can access MariaDB on localhost
-      - run:  nc -vz localhost 4040
-      - run: curl  localhost:4040
+      - run:  nc -vz localhost 7000
+      - run: curl  localhost:7000
