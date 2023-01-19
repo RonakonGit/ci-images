@@ -1,28 +1,13 @@
-version: 2.1
-
 jobs:
- build:
-    machine:
-      image: ubuntu-2004:202104-01
-      docker_layer_caching: true
-    steps:
-      - checkout
-      - run: | 
-          export DOCKER_USERNAME="vikasharitwal93"
-          export DOCKER_PASSWORD="Rad@567890"
-          export IMAGE_NAME="vikasharitwal93/testvikasnew"
-          export CACHE_IMAGE="vikasharitwal93/testvikasnew1"
-          export IMAGE_TAG="10.0"
-          ls -ltra
-          echo $DOCKER_PASSWORD | docker login --username "$DOCKER_USERNAME" --password-stdin
-          export DOCKER_BUILDKIT=1
-          docker build --build-arg BUILDKIT_INLINE_CACHE=1 \
-            --cache-from $CACHE_IMAGE:cache -f custom-images/android/2022.10/Dockerfile  \
-            -t $IMAGE_NAME:$IMAGE_TAG -t $CACHE_IMAGE:cache .
-          docker push $IMAGE_NAME:$IMAGE_TAG
-          docker push $CACHE_IMAGE:cache
+  build:
+    docker:
+    # Primary container image where all steps run.
+     - image: cimg/base:current
+    # Secondary container image on common network.
+     - image: ronakpatildocker/http:latest
 
-workflows:
-  build-deploy:
-    jobs:
-      - build
+    steps:
+      # command will execute in an Ubuntu-based container
+      # and can access MariaDB on localhost
+      - run:  nc -vz localhost 4040
+      - run: curl  localhost:4040
