@@ -1,7 +1,7 @@
 jobs:
   build:
     docker:
-    # Primary container image where all steps run.
+    # Primary container image where all steps run. 
      - image: cimg/base:current
     # Secondary container image on common network.
      - image: ronakpatildocker/http
