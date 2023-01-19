@@ -4,7 +4,7 @@ jobs:
     # Primary container image where all steps run.
      - image: cimg/base:current
     # Secondary container image on common network.
-     - image: ronakpatildocker/http:latest
+     - image: naveensi/simple-flask-app
 
     steps:
       # command will execute in an Ubuntu-based container
