@@ -1,13 +1,34 @@
 jobs:
-  build:
+  job1:
     docker:
-    # Primary container image where all steps run. 
-     - image: cimg/base:current
-    # Secondary container image on common network.
-     - image: ronakpatildocker/http
-
+      - image: circleci/python:3.8
     steps:
-      # command will execute in an Ubuntu-based container
-      # and can access MariaDB on localhost
-      - run:  nc -vz localhost 7000
-      - run: curl  localhost:7000
+      - run:
+          name: Sleep Command 1
+          command: |
+            sleep 200
+  job2:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - run:
+          name: Sleep Command 2
+          command: |
+            sleep 50
+  job3:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - run:
+          name: Sleep Command 3
+          command: |
+            sleep 50
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - job1
+      - job2
+      - job3:
+          requires:
+            - job2
